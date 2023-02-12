@@ -13,7 +13,7 @@ node {
          }
           stage('Build docker') {
                  dockerImage = docker.build("springboot-deploy:${env.BUILD_NUMBER}")
-				 sh 'docker tag springboot-deploy demirtasorkun/springboot-deploy:latest'
+				 sh 'docker tag springboot-deploy:${env.BUILD_NUMBER} demirtasorkun/springboot-deploy:latest'
                  sh 'docker tag springboot-deploy:${env.BUILD_NUMBER} demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}'
 
           }
