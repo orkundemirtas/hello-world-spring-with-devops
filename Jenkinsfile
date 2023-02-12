@@ -20,6 +20,8 @@ node {
                   echo "Docker Image Tag Name: ${dockerImageTag}"
 		  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
                   sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
+				  sh 'docker tag springboot-deploy:${env.BUILD_NUMBER} demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}'
+				  sh  'docker push demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}' 
           }
 		  
     }catch(e){
