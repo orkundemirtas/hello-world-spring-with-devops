@@ -1,10 +1,10 @@
-package com.example.helloworldspringwithdevops;
+package com.example.demodeploy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HelloWorldSpringWithDevopsApplicationTests {
+class DemoDeployApplicationTests {
 
 	@Test
 	void contextLoads() {
