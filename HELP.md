@@ -1,8 +1,8 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The JVM level was changed from '11' to '17', review the [JDK Version Range](https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions#jdk-version-range) on the wiki for more details.
-* The original package name 'com.example.hello-world' is invalid and this project uses 'com.example.helloworld' instead.
+* The JVM level was changed from '1.8' to '17', review the [JDK Version Range](https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions#jdk-version-range) on the wiki for more details.
+* The original package name 'com.example.hello-world-spring-with-devops' is invalid and this project uses 'com.example.helloworldspringwithdevops' instead.
 
 # Getting Started
 

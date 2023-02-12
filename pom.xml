@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>hello-world</artifactId>
+	<artifactId>hello-world-spring-with-devops</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>hello-world</name>
-	<description>Hello World project for Spring Boot and Kubernetes</description>
+	<name>hello-world-spring-with-devops</name>
+	<description>Hello World project for Spring Boot on Kubernetes with CI/CD</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
