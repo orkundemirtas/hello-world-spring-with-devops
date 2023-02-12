@@ -1,8 +1,9 @@
-node{
+node {
     def WORKSPACE = 'D:\\JenkinsWorkspace\\springboot'
     def dockerImageTag = "springboot-deploy${env.BUILD_NUMBER}"
 
     try{
+//          notifyBuild('STARTED')
          stage('Clone Repo') {
             // for display purposes
             // Get some code from a GitHub repository
@@ -16,7 +17,7 @@ node{
 
           stage('Deploy docker'){
                   echo "Docker Image Tag Name: ${dockerImageTag}"
-                  docker run --name springboot-deploy -d -p 8080:8080 springboot-deploy:${env.BUILD_NUMBER}
+                  "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
           }
     }catch(e){
 //         currentBuild.result = "FAILED"
@@ -51,5 +52,3 @@ def notifyBuild(String buildStatus = 'STARTED'){
          recipientProviders: [[$class: 'DevelopersRecipientProvider']]
        )
 }
-
-
