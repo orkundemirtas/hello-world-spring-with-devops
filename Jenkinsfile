@@ -22,7 +22,7 @@ node {
           }
 		  
 		  stage('Push image') {
-			withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
+			withDockerRegistry([ credentialsId: "dockerhub-user", url: "" ]) {
 			dockerImage.push()
         }
     }  
