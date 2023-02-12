@@ -16,9 +16,9 @@ node{
 
           stage('Deploy docker'){
                   echo "Docker Image Tag Name: ${dockerImageTag}"
-                  sh "docker stop springboot-deploy || true"
-                  sh "docker rm springboot-deploy || true"
-                  sh "docker run --name springboot-deploy -d -p 8080:8080 springboot-deploy:${env.BUILD_NUMBER}"
+                  docker.stop(springboot-deploy)
+                  docker.rm(springboot-deploy)
+                  docker.run(--name springboot-deploy -d -p 8080:8080 springboot-deploy:${env.BUILD_NUMBER})
           }
     }catch(e){
 //         currentBuild.result = "FAILED"
