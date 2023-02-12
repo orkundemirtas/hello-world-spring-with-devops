@@ -3,10 +3,7 @@ node {
     def dockerImageTag = "springboot-deploy${env.BUILD_NUMBER}"
 
     try{
-//       notifyBuild('STARTED')
-		 environment {
-			DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-		 }
+//          notifyBuild('STARTED')
          stage('Clone Repo') {
             // for display purposes
             // Get some code from a GitHub repository
@@ -20,22 +17,14 @@ node {
 
           stage('Deploy docker'){
                   echo "Docker Image Tag Name: ${dockerImageTag}"
-				  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
+		  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
                   sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
           }
 		  
-		  stage('Login'){
-			  sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-          }
-		  stage('Push'){
-			  sh 'docker push demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}'
-          }
-		  post {
-			always {
-			  sh 'docker logout'
-			}
-		 }
-		  
+		  stage('Push image') {
+			withDockerRegistry([ credentialsId: "dockerhub-user", url: "" ]) {
+			dockerImage.push()
+        }
     }  
     }catch(e){
 //         currentBuild.result = "FAILED"
