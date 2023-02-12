@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloWorldSpringWithDevopsApplication{
 
 	public static void main(String[] args) {
-		SpringApplication.run(HelloWorldApplication.class, args);
+		SpringApplication.run(HelloWorldSpringWithDevopsApplication.class, args);
 	}
 
 	@GetMapping("/")
