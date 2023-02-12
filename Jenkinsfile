@@ -13,18 +13,25 @@ node {
          }
           stage('Build docker') {
                  dockerImage = docker.build("springboot-deploy:${env.BUILD_NUMBER}")
-          }
+				 sh 'docker tag springboot-deploy demirtasorkun/springboot-deploy:latest'
+                 sh 'docker tag springboot-deploy:${env.BUILD_NUMBER} demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}'
 
-          stage('Deploy docker'){
-                  echo "Docker Image Tag Name: ${dockerImageTag}"
-		  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
-                  sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
           }
-		  
-		  stage('Push image') {
-			withDockerRegistry([ credentialsId: "dockerhub-user", url: "" ]) {
-			dockerImage.push()
+		  stage('Publish image to Docker Hub') {
+            steps {
+				withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+				  sh  'docker push demirtasorkun/springboot-deploy:latest'
+				  sh  'docker push demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}' 
+				} 
+          }
         }
+
+		  stage('Deploy docker'){
+				echo "Docker Image Tag Name: ${dockerImageTag}"
+				sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
+				sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
+		  }
+		  
     }  
     }catch(e){
 //         currentBuild.result = "FAILED"
