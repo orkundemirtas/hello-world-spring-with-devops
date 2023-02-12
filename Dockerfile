@@ -1,5 +1,5 @@
 # Docker Build Stage
-FROM openjdk:11 as build
+FROM maven:3-jdk-8-alpine AS build
 
 
 # Build Stage
@@ -10,11 +10,12 @@ RUN mvn clean install -DskipTests
 
 
 # Docker Build Stage
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM openjdk:8-jdk-alpine
 
-COPY --from=build D:\\JenkinsWorkspace\\springboot\\*.jar app.jar
+COPY --from=build /opt/app/target/*.jar app.jar
 
 ENV PORT 8081
 EXPOSE $PORT
 
 ENTRYPOINT ["java","-jar","-Xmx1024M","-Dserver.port=${PORT}","app.jar"]
+
