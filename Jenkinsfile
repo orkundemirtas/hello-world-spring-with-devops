@@ -32,7 +32,7 @@ node {
 				sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
 		  }
 		  
-    }  
+ 
     }catch(e){
 //         currentBuild.result = "FAILED"
         throw e
