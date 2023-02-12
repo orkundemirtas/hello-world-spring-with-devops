@@ -1,5 +1,5 @@
 # Docker Build Stage
-FROM maven:3.8.3-openjdk-17 AS build
+FROM maven:3-jdk-8-alpine AS build
 
 
 # Build Stage
@@ -10,11 +10,11 @@ RUN mvn clean install -DskipTests
 
 
 # Docker Build Stage
-FROM maven:3.8.3-openjdk-17
+FROM openjdk:8-jdk-alpine
 
 COPY --from=build /opt/app/target/*.jar app.jar
 
-ENV PORT 8081
+ENV PORT 8082
 EXPOSE $PORT
 
 ENTRYPOINT ["java","-jar","-Xmx1024M","-Dserver.port=${PORT}","app.jar"]
