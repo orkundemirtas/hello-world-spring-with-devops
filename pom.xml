@@ -14,7 +14,11 @@
 	<name>demo-deploy</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+<<<<<<< HEAD
 		<java.version>11</java.version>
+=======
+		<java.version>1.8</java.version>
+>>>>>>> ced03dbfc72ce999104dd68b8f61796172a8f0f3
 	</properties>
 	<dependencies>
 		<dependency>
