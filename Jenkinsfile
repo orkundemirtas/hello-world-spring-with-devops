@@ -4,10 +4,6 @@ node {
 
     try{
 //          notifyBuild('STARTED')
-		 environment {
-		   DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-		 }
-		 
          stage('Clone Repo') {
             // for display purposes
             // Get some code from a GitHub repository
@@ -24,23 +20,13 @@ node {
 				  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
                   sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
           }
-		  stage('Login') {
-			  steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			  }
-			}
-		stage('Push') {
-		  steps {
-			sh 'docker push lloydmatereke/jenkins-docker-hub'
-		  }
-		}
-	  }
-	  post {
-		always {
-		  sh 'docker logout'
-		}
-	  }
-	}catch(e){
+		  
+		  stage('Push image') {
+			withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
+			dockerImage.push()
+        }
+    }  
+    }catch(e){
 //         currentBuild.result = "FAILED"
         throw e
     }finally{
