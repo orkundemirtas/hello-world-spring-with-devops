@@ -21,8 +21,7 @@ node {
 				  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
                   sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
 				  withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-					  sh 'docker tag springboot-deploy:${env.BUILD_NUMBER} demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}'
-					  sh  'docker push demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}' 
+					  dockerImage.push()
 				  }
           }
 		  
