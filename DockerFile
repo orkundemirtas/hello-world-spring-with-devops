@@ -10,7 +10,7 @@ RUN mvn clean install -DskipTests
 
 
 # Docker Build Stage
-FROM openjdk:11
+FROM adoptopenjdk/openjdk11:alpine-jre
 
 COPY --from=build /opt/app/target/*.jar app.jar
 
