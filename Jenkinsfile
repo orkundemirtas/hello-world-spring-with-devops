@@ -14,16 +14,13 @@ node {
           stage('Build docker') {
                  dockerImage = docker.build("springboot-deploy:${env.BUILD_NUMBER}")
 
+
           }
 
           stage('Deploy docker'){
                   echo "Docker Image Tag Name: ${dockerImageTag}"
-				sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
+		  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
                   sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
-				  withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-					  sh 'docker tag demirtasorkun/springboot-deploy:${env.BUILD_NUMBER} springboot-deploy:${env.BUILD_NUMBER}'
-					  sh  'docker push demirtasorkun/springboot-deploy:${env.BUILD_NUMBER}' 
-				  }
           }
 		  
     }catch(e){
