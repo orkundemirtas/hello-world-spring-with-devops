@@ -19,6 +19,12 @@ node {
                   echo "Docker Image Tag Name: ${dockerImageTag}"
                   sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
           }
+		  
+		  stage('Push image') {
+			withDockerRegistry([ credentialsId: "dockerhubconnection", url: "" ]) {
+			dockerImage.push()
+        }
+    }  
     }catch(e){
 //         currentBuild.result = "FAILED"
         throw e
