@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 
-public class HelloWorldApplication {
+public class HelloWorldSpringWithDevopsApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(HelloWorldApplication.class, args);
