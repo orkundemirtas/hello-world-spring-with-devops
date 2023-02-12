@@ -4,6 +4,9 @@ node {
 
     try{
 //          notifyBuild('STARTED')
+	 environment {
+	 	DOCKERHUB_CREDENTIALS = credentials('dockerhub-user')
+	 }
          stage('Clone Repo') {
             // for display purposes
             // Get some code from a GitHub repository
@@ -16,16 +19,21 @@ node {
           }
 
           stage('Deploy docker'){
-                  echo "Docker Image Tag Name: ${dockerImageTag}"
+		  echo "Docker Image Tag Name: ${dockerImageTag}"
 		  sh "docker stop springboot-deploy || true && docker rm springboot-deploy || true"
-                  sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
+		  sh "docker run --name springboot-deploy -d -p 8081:8081 springboot-deploy:${env.BUILD_NUMBER}"
           }
-		  
-		  stage('Push image') {
-			withDockerRegistry([ credentialsId: "dockerhub-user", url: "" ]) {
-			dockerImage.push()
-        }
-    }  
+	  stage('Login') {
+		steps {
+		  sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+		}
+	  }
+	  stage('Push') {
+		steps {
+		  sh 'docker push orkundemirtas/springboot-deploy:${env.BUILD_NUMBER}'
+		}
+	  }
+		   
     }catch(e){
 //         currentBuild.result = "FAILED"
         throw e
